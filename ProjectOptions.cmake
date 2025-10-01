@@ -7,7 +7,7 @@ include(CheckCXXCompilerFlag)
 include(CheckCXXSourceCompiles)
 
 
-macro(myproject_supports_sanitizers)
+macro(CameraSDK_supports_sanitizers)
   if((CMAKE_CXX_COMPILER_ID MATCHES ".*Clang.*" OR CMAKE_CXX_COMPILER_ID MATCHES ".*GNU.*") AND NOT WIN32)
 
     message(STATUS "Sanity checking UndefinedBehaviorSanitizer, it should be supported on this platform")
@@ -54,183 +54,183 @@ macro(myproject_supports_sanitizers)
   endif()
 endmacro()
 
-macro(myproject_setup_options)
-  option(myproject_ENABLE_HARDENING "Enable hardening" ON)
-  option(myproject_ENABLE_COVERAGE "Enable coverage reporting" OFF)
+macro(CameraSDK_setup_options)
+  option(CameraSDK_ENABLE_HARDENING "Enable hardening" ON)
+  option(CameraSDK_ENABLE_COVERAGE "Enable coverage reporting" OFF)
   cmake_dependent_option(
-    myproject_ENABLE_GLOBAL_HARDENING
+    CameraSDK_ENABLE_GLOBAL_HARDENING
     "Attempt to push hardening options to built dependencies"
     ON
-    myproject_ENABLE_HARDENING
+    CameraSDK_ENABLE_HARDENING
     OFF)
 
-  myproject_supports_sanitizers()
+  CameraSDK_supports_sanitizers()
 
-  if(NOT PROJECT_IS_TOP_LEVEL OR myproject_PACKAGING_MAINTAINER_MODE)
-    option(myproject_ENABLE_IPO "Enable IPO/LTO" OFF)
-    option(myproject_WARNINGS_AS_ERRORS "Treat Warnings As Errors" OFF)
-    option(myproject_ENABLE_USER_LINKER "Enable user-selected linker" OFF)
-    option(myproject_ENABLE_SANITIZER_ADDRESS "Enable address sanitizer" OFF)
-    option(myproject_ENABLE_SANITIZER_LEAK "Enable leak sanitizer" OFF)
-    option(myproject_ENABLE_SANITIZER_UNDEFINED "Enable undefined sanitizer" OFF)
-    option(myproject_ENABLE_SANITIZER_THREAD "Enable thread sanitizer" OFF)
-    option(myproject_ENABLE_SANITIZER_MEMORY "Enable memory sanitizer" OFF)
-    option(myproject_ENABLE_UNITY_BUILD "Enable unity builds" OFF)
-    option(myproject_ENABLE_CLANG_TIDY "Enable clang-tidy" OFF)
-    option(myproject_ENABLE_CPPCHECK "Enable cpp-check analysis" OFF)
-    option(myproject_ENABLE_PCH "Enable precompiled headers" OFF)
-    option(myproject_ENABLE_CACHE "Enable ccache" OFF)
+  if(NOT PROJECT_IS_TOP_LEVEL OR CameraSDK_PACKAGING_MAINTAINER_MODE)
+    option(CameraSDK_ENABLE_IPO "Enable IPO/LTO" OFF)
+    option(CameraSDK_WARNINGS_AS_ERRORS "Treat Warnings As Errors" OFF)
+    option(CameraSDK_ENABLE_USER_LINKER "Enable user-selected linker" OFF)
+    option(CameraSDK_ENABLE_SANITIZER_ADDRESS "Enable address sanitizer" OFF)
+    option(CameraSDK_ENABLE_SANITIZER_LEAK "Enable leak sanitizer" OFF)
+    option(CameraSDK_ENABLE_SANITIZER_UNDEFINED "Enable undefined sanitizer" OFF)
+    option(CameraSDK_ENABLE_SANITIZER_THREAD "Enable thread sanitizer" OFF)
+    option(CameraSDK_ENABLE_SANITIZER_MEMORY "Enable memory sanitizer" OFF)
+    option(CameraSDK_ENABLE_UNITY_BUILD "Enable unity builds" OFF)
+    option(CameraSDK_ENABLE_CLANG_TIDY "Enable clang-tidy" OFF)
+    option(CameraSDK_ENABLE_CPPCHECK "Enable cpp-check analysis" OFF)
+    option(CameraSDK_ENABLE_PCH "Enable precompiled headers" OFF)
+    option(CameraSDK_ENABLE_CACHE "Enable ccache" OFF)
   else()
-    option(myproject_ENABLE_IPO "Enable IPO/LTO" ON)
-    option(myproject_WARNINGS_AS_ERRORS "Treat Warnings As Errors" ON)
-    option(myproject_ENABLE_USER_LINKER "Enable user-selected linker" OFF)
-    option(myproject_ENABLE_SANITIZER_ADDRESS "Enable address sanitizer" ${SUPPORTS_ASAN})
-    option(myproject_ENABLE_SANITIZER_LEAK "Enable leak sanitizer" OFF)
-    option(myproject_ENABLE_SANITIZER_UNDEFINED "Enable undefined sanitizer" ${SUPPORTS_UBSAN})
-    option(myproject_ENABLE_SANITIZER_THREAD "Enable thread sanitizer" OFF)
-    option(myproject_ENABLE_SANITIZER_MEMORY "Enable memory sanitizer" OFF)
-    option(myproject_ENABLE_UNITY_BUILD "Enable unity builds" OFF)
-    option(myproject_ENABLE_CLANG_TIDY "Enable clang-tidy" ON)
-    option(myproject_ENABLE_CPPCHECK "Enable cpp-check analysis" ON)
-    option(myproject_ENABLE_PCH "Enable precompiled headers" OFF)
-    option(myproject_ENABLE_CACHE "Enable ccache" ON)
+    option(CameraSDK_ENABLE_IPO "Enable IPO/LTO" ON)
+    option(CameraSDK_WARNINGS_AS_ERRORS "Treat Warnings As Errors" ON)
+    option(CameraSDK_ENABLE_USER_LINKER "Enable user-selected linker" OFF)
+    option(CameraSDK_ENABLE_SANITIZER_ADDRESS "Enable address sanitizer" ${SUPPORTS_ASAN})
+    option(CameraSDK_ENABLE_SANITIZER_LEAK "Enable leak sanitizer" OFF)
+    option(CameraSDK_ENABLE_SANITIZER_UNDEFINED "Enable undefined sanitizer" ${SUPPORTS_UBSAN})
+    option(CameraSDK_ENABLE_SANITIZER_THREAD "Enable thread sanitizer" OFF)
+    option(CameraSDK_ENABLE_SANITIZER_MEMORY "Enable memory sanitizer" OFF)
+    option(CameraSDK_ENABLE_UNITY_BUILD "Enable unity builds" OFF)
+    option(CameraSDK_ENABLE_CLANG_TIDY "Enable clang-tidy" ON)
+    option(CameraSDK_ENABLE_CPPCHECK "Enable cpp-check analysis" ON)
+    option(CameraSDK_ENABLE_PCH "Enable precompiled headers" OFF)
+    option(CameraSDK_ENABLE_CACHE "Enable ccache" ON)
   endif()
 
   if(NOT PROJECT_IS_TOP_LEVEL)
     mark_as_advanced(
-      myproject_ENABLE_IPO
-      myproject_WARNINGS_AS_ERRORS
-      myproject_ENABLE_USER_LINKER
-      myproject_ENABLE_SANITIZER_ADDRESS
-      myproject_ENABLE_SANITIZER_LEAK
-      myproject_ENABLE_SANITIZER_UNDEFINED
-      myproject_ENABLE_SANITIZER_THREAD
-      myproject_ENABLE_SANITIZER_MEMORY
-      myproject_ENABLE_UNITY_BUILD
-      myproject_ENABLE_CLANG_TIDY
-      myproject_ENABLE_CPPCHECK
-      myproject_ENABLE_COVERAGE
-      myproject_ENABLE_PCH
-      myproject_ENABLE_CACHE)
+      CameraSDK_ENABLE_IPO
+      CameraSDK_WARNINGS_AS_ERRORS
+      CameraSDK_ENABLE_USER_LINKER
+      CameraSDK_ENABLE_SANITIZER_ADDRESS
+      CameraSDK_ENABLE_SANITIZER_LEAK
+      CameraSDK_ENABLE_SANITIZER_UNDEFINED
+      CameraSDK_ENABLE_SANITIZER_THREAD
+      CameraSDK_ENABLE_SANITIZER_MEMORY
+      CameraSDK_ENABLE_UNITY_BUILD
+      CameraSDK_ENABLE_CLANG_TIDY
+      CameraSDK_ENABLE_CPPCHECK
+      CameraSDK_ENABLE_COVERAGE
+      CameraSDK_ENABLE_PCH
+      CameraSDK_ENABLE_CACHE)
   endif()
 
-  myproject_check_libfuzzer_support(LIBFUZZER_SUPPORTED)
-  if(LIBFUZZER_SUPPORTED AND (myproject_ENABLE_SANITIZER_ADDRESS OR myproject_ENABLE_SANITIZER_THREAD OR myproject_ENABLE_SANITIZER_UNDEFINED))
+  CameraSDK_check_libfuzzer_support(LIBFUZZER_SUPPORTED)
+  if(LIBFUZZER_SUPPORTED AND (CameraSDK_ENABLE_SANITIZER_ADDRESS OR CameraSDK_ENABLE_SANITIZER_THREAD OR CameraSDK_ENABLE_SANITIZER_UNDEFINED))
     set(DEFAULT_FUZZER ON)
   else()
     set(DEFAULT_FUZZER OFF)
   endif()
 
-  option(myproject_BUILD_FUZZ_TESTS "Enable fuzz testing executable" ${DEFAULT_FUZZER})
+  option(CameraSDK_BUILD_FUZZ_TESTS "Enable fuzz testing executable" ${DEFAULT_FUZZER})
 
 endmacro()
 
-macro(myproject_global_options)
-  if(myproject_ENABLE_IPO)
+macro(CameraSDK_global_options)
+  if(CameraSDK_ENABLE_IPO)
     include(cmake/InterproceduralOptimization.cmake)
-    myproject_enable_ipo()
+    CameraSDK_enable_ipo()
   endif()
 
-  myproject_supports_sanitizers()
+  CameraSDK_supports_sanitizers()
 
-  if(myproject_ENABLE_HARDENING AND myproject_ENABLE_GLOBAL_HARDENING)
+  if(CameraSDK_ENABLE_HARDENING AND CameraSDK_ENABLE_GLOBAL_HARDENING)
     include(cmake/Hardening.cmake)
     if(NOT SUPPORTS_UBSAN 
-       OR myproject_ENABLE_SANITIZER_UNDEFINED
-       OR myproject_ENABLE_SANITIZER_ADDRESS
-       OR myproject_ENABLE_SANITIZER_THREAD
-       OR myproject_ENABLE_SANITIZER_LEAK)
+       OR CameraSDK_ENABLE_SANITIZER_UNDEFINED
+       OR CameraSDK_ENABLE_SANITIZER_ADDRESS
+       OR CameraSDK_ENABLE_SANITIZER_THREAD
+       OR CameraSDK_ENABLE_SANITIZER_LEAK)
       set(ENABLE_UBSAN_MINIMAL_RUNTIME FALSE)
     else()
       set(ENABLE_UBSAN_MINIMAL_RUNTIME TRUE)
     endif()
-    message("${myproject_ENABLE_HARDENING} ${ENABLE_UBSAN_MINIMAL_RUNTIME} ${myproject_ENABLE_SANITIZER_UNDEFINED}")
-    myproject_enable_hardening(myproject_options ON ${ENABLE_UBSAN_MINIMAL_RUNTIME})
+    message("${CameraSDK_ENABLE_HARDENING} ${ENABLE_UBSAN_MINIMAL_RUNTIME} ${CameraSDK_ENABLE_SANITIZER_UNDEFINED}")
+    CameraSDK_enable_hardening(CameraSDK_options ON ${ENABLE_UBSAN_MINIMAL_RUNTIME})
   endif()
 endmacro()
 
-macro(myproject_local_options)
+macro(CameraSDK_local_options)
   if(PROJECT_IS_TOP_LEVEL)
     include(cmake/StandardProjectSettings.cmake)
   endif()
 
-  add_library(myproject_warnings INTERFACE)
-  add_library(myproject_options INTERFACE)
+  add_library(CameraSDK_warnings INTERFACE)
+  add_library(CameraSDK_options INTERFACE)
 
   include(cmake/CompilerWarnings.cmake)
-  myproject_set_project_warnings(
-    myproject_warnings
-    ${myproject_WARNINGS_AS_ERRORS}
+  CameraSDK_set_project_warnings(
+    CameraSDK_warnings
+    ${CameraSDK_WARNINGS_AS_ERRORS}
     ""
     ""
     ""
     "")
 
-  if(myproject_ENABLE_USER_LINKER)
+  if(CameraSDK_ENABLE_USER_LINKER)
     include(cmake/Linker.cmake)
-    myproject_configure_linker(myproject_options)
+    CameraSDK_configure_linker(CameraSDK_options)
   endif()
 
   include(cmake/Sanitizers.cmake)
-  myproject_enable_sanitizers(
-    myproject_options
-    ${myproject_ENABLE_SANITIZER_ADDRESS}
-    ${myproject_ENABLE_SANITIZER_LEAK}
-    ${myproject_ENABLE_SANITIZER_UNDEFINED}
-    ${myproject_ENABLE_SANITIZER_THREAD}
-    ${myproject_ENABLE_SANITIZER_MEMORY})
+  CameraSDK_enable_sanitizers(
+    CameraSDK_options
+    ${CameraSDK_ENABLE_SANITIZER_ADDRESS}
+    ${CameraSDK_ENABLE_SANITIZER_LEAK}
+    ${CameraSDK_ENABLE_SANITIZER_UNDEFINED}
+    ${CameraSDK_ENABLE_SANITIZER_THREAD}
+    ${CameraSDK_ENABLE_SANITIZER_MEMORY})
 
-  set_target_properties(myproject_options PROPERTIES UNITY_BUILD ${myproject_ENABLE_UNITY_BUILD})
+  set_target_properties(CameraSDK_options PROPERTIES UNITY_BUILD ${CameraSDK_ENABLE_UNITY_BUILD})
 
-  if(myproject_ENABLE_PCH)
+  if(CameraSDK_ENABLE_PCH)
     target_precompile_headers(
-      myproject_options
+      CameraSDK_options
       INTERFACE
       <vector>
       <string>
       <utility>)
   endif()
 
-  if(myproject_ENABLE_CACHE)
+  if(CameraSDK_ENABLE_CACHE)
     include(cmake/Cache.cmake)
-    myproject_enable_cache()
+    CameraSDK_enable_cache()
   endif()
 
   include(cmake/StaticAnalyzers.cmake)
-  if(myproject_ENABLE_CLANG_TIDY)
-    myproject_enable_clang_tidy(myproject_options ${myproject_WARNINGS_AS_ERRORS})
+  if(CameraSDK_ENABLE_CLANG_TIDY)
+    CameraSDK_enable_clang_tidy(CameraSDK_options ${CameraSDK_WARNINGS_AS_ERRORS})
   endif()
 
-  if(myproject_ENABLE_CPPCHECK)
-    myproject_enable_cppcheck(${myproject_WARNINGS_AS_ERRORS} "" # override cppcheck options
+  if(CameraSDK_ENABLE_CPPCHECK)
+    CameraSDK_enable_cppcheck(${CameraSDK_WARNINGS_AS_ERRORS} "" # override cppcheck options
     )
   endif()
 
-  if(myproject_ENABLE_COVERAGE)
+  if(CameraSDK_ENABLE_COVERAGE)
     include(cmake/Tests.cmake)
-    myproject_enable_coverage(myproject_options)
+    CameraSDK_enable_coverage(CameraSDK_options)
   endif()
 
-  if(myproject_WARNINGS_AS_ERRORS)
+  if(CameraSDK_WARNINGS_AS_ERRORS)
     check_cxx_compiler_flag("-Wl,--fatal-warnings" LINKER_FATAL_WARNINGS)
     if(LINKER_FATAL_WARNINGS)
       # This is not working consistently, so disabling for now
-      # target_link_options(myproject_options INTERFACE -Wl,--fatal-warnings)
+      # target_link_options(CameraSDK_options INTERFACE -Wl,--fatal-warnings)
     endif()
   endif()
 
-  if(myproject_ENABLE_HARDENING AND NOT myproject_ENABLE_GLOBAL_HARDENING)
+  if(CameraSDK_ENABLE_HARDENING AND NOT CameraSDK_ENABLE_GLOBAL_HARDENING)
     include(cmake/Hardening.cmake)
     if(NOT SUPPORTS_UBSAN 
-       OR myproject_ENABLE_SANITIZER_UNDEFINED
-       OR myproject_ENABLE_SANITIZER_ADDRESS
-       OR myproject_ENABLE_SANITIZER_THREAD
-       OR myproject_ENABLE_SANITIZER_LEAK)
+       OR CameraSDK_ENABLE_SANITIZER_UNDEFINED
+       OR CameraSDK_ENABLE_SANITIZER_ADDRESS
+       OR CameraSDK_ENABLE_SANITIZER_THREAD
+       OR CameraSDK_ENABLE_SANITIZER_LEAK)
       set(ENABLE_UBSAN_MINIMAL_RUNTIME FALSE)
     else()
       set(ENABLE_UBSAN_MINIMAL_RUNTIME TRUE)
     endif()
-    myproject_enable_hardening(myproject_options OFF ${ENABLE_UBSAN_MINIMAL_RUNTIME})
+    CameraSDK_enable_hardening(CameraSDK_options OFF ${ENABLE_UBSAN_MINIMAL_RUNTIME})
   endif()
 
 endmacro()
